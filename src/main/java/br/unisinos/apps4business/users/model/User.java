@@ -2,12 +2,10 @@ package br.unisinos.apps4business.users.model;
 
 import br.unisinos.apps4business.users.enumerators.Role;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

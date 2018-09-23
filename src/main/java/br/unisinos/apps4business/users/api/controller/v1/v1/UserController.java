@@ -7,6 +7,7 @@ import br.unisinos.apps4business.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,11 +23,11 @@ public class UserController {
     }
 
     @PostMapping(value = "/", produces = "application/json")
-    public UserResponseDTO createUser(@RequestBody UserRequestDTO user) {
+    public UserResponseDTO createUser(@Valid @RequestBody UserRequestDTO user) {
         return userConverter.convertEntityToResponse(userService.saveUser(userConverter.convertRequestToEntity(user)));
     }
     @PatchMapping(value = "/{id}", produces = "application/json")
-    public UserResponseDTO updateUser(@PathVariable Long id, @RequestBody UserRequestDTO user) {
+    public UserResponseDTO updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO user) {
         return userConverter.convertEntityToResponse(userService.saveUser(id, userConverter.convertRequestToEntity(user)));
     }
 

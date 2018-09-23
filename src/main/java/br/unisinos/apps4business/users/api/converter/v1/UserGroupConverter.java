@@ -3,7 +3,7 @@ package br.unisinos.apps4business.users.api.converter.v1;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupResponseDTO;
 import br.unisinos.apps4business.users.model.UserGroup;
-import org.jvnet.hk2.annotations.Service;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;

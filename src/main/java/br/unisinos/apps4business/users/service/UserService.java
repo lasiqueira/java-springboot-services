@@ -5,11 +5,13 @@ import br.unisinos.apps4business.users.model.User;
 import br.unisinos.apps4business.users.model.UserGroup;
 import br.unisinos.apps4business.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class UserService {
     private UserRepository userRepository;
 
@@ -25,7 +27,7 @@ public class UserService {
     }
 
     public List<User> findByUserGroup(UserGroup userGroup) {
-        return userRepository.findByUserGroup(userGroup);
+        return userRepository.findByUserGroups(userGroup);
     }
 
     public List<User> findByRole(Role role){
