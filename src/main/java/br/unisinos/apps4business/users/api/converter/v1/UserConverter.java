@@ -18,6 +18,7 @@ public class UserConverter {
         user.setEmail(userRequestDTO.getEmail());
         user.setLogin(userRequestDTO.getLogin());
         user.setRole(userRequestDTO.getRole());
+        user.setName(userRequestDTO.getName());
         user.setUserGroups(convertUserGroupsDTOToUserGroups(userRequestDTO.getUserGroups()));
         return user;
     }
@@ -28,6 +29,7 @@ public class UserConverter {
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setLogin(user.getLogin());
         userResponseDTO.setRole(user.getRole());
+        userResponseDTO.setName(user.getName());
         userResponseDTO.setUserGroups(convertUserGroupsToUserGroupsDTO(user.getUserGroups()));
         return userResponseDTO;
     }
