@@ -29,4 +29,9 @@ public class UserGroupController {
         return userGroupConverter.convertEntityToResponse(userGroupService.createUserGroup(userGroupConverter.convertRequestToEntity(userGroupRequest)));
     }
 
+    @PatchMapping(value = "/{}id", produces = "application/json")
+    public UserGroupResponseDTO createUserGroup(@PathVariable Long id, @Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
+        return userGroupConverter.convertEntityToResponse(userGroupService.updateUserGroup(id, userGroupConverter.convertRequestToEntity(userGroupRequest)));
+    }
+
 }

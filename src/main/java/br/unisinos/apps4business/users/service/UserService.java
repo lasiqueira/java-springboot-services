@@ -36,10 +36,10 @@ public class UserService {
     public User findById(Long id){
         return userRepository.findById(id).orElse(null);
     }
-    public User saveUser(User user){
+    public User createUser(User user){
        return userRepository.save(user);
     }
-    public User saveUser(Long id, User user){
+    public User updateUser(Long id, User user){
         if(userRepository.existsById(id)){
             user.setId(id);
             return userRepository.save(user);

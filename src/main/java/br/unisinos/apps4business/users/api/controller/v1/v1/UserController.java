@@ -24,11 +24,11 @@ public class UserController {
 
     @PostMapping(value = "/", produces = "application/json")
     public UserResponseDTO createUser(@Valid @RequestBody UserRequestDTO user) {
-        return userConverter.convertEntityToResponse(userService.saveUser(userConverter.convertRequestToEntity(user)));
+        return userConverter.convertEntityToResponse(userService.createUser(userConverter.convertRequestToEntity(user)));
     }
     @PatchMapping(value = "/{id}", produces = "application/json")
     public UserResponseDTO updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO user) {
-        return userConverter.convertEntityToResponse(userService.saveUser(id, userConverter.convertRequestToEntity(user)));
+        return userConverter.convertEntityToResponse(userService.updateUser(id, userConverter.convertRequestToEntity(user)));
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
