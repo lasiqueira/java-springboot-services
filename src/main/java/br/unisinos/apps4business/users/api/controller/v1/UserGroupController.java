@@ -20,17 +20,17 @@ public class UserGroupController {
         this.userGroupConverter = userGroupConverter;
     }
 
-    @GetMapping(value = "/", produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     public List<UserGroupResponseDTO> fetchAllUserGroups() {
         return userGroupConverter.convertEntityListToResponseList(userGroupService.fetchAllUserGroups());
     }
-    @PostMapping(value = "/", produces = "application/json")
+    @PostMapping(value = "", produces = "application/json")
     public UserGroupResponseDTO createUserGroup(@Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
         return userGroupConverter.convertEntityToResponse(userGroupService.createUserGroup(userGroupConverter.convertRequestToEntity(userGroupRequest)));
     }
 
-    @PatchMapping(value = "/{}id", produces = "application/json")
-    public UserGroupResponseDTO createUserGroup(@PathVariable Long id, @Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
+    @PatchMapping(value = "/{id}", produces = "application/json")
+    public UserGroupResponseDTO updateUserGroup(@PathVariable Long id, @Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
         return userGroupConverter.convertEntityToResponse(userGroupService.updateUserGroup(id, userGroupConverter.convertRequestToEntity(userGroupRequest)));
     }
 

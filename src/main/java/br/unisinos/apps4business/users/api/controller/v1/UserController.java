@@ -22,7 +22,7 @@ public class UserController {
         this.userConverter = userConverter;
     }
 
-    @PostMapping(value = "/", produces = "application/json")
+    @PostMapping(value = "", produces = "application/json")
     public UserResponseDTO createUser(@Valid @RequestBody UserRequestDTO user) {
         return userConverter.convertEntityToResponse(userService.createUser(userConverter.convertRequestToEntity(user)));
     }
@@ -36,12 +36,12 @@ public class UserController {
         return userConverter.convertEntityToResponse(userService.findById(id));
     }
 
-    @GetMapping(value = "/", produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     public List<UserResponseDTO> fetchAllUsers() {
         return userConverter.convertEntityListToResponseList(userService.fetchAllUsers());
     }
 
-    @DeleteMapping(value = "{id}", produces = "application/json")
+    @DeleteMapping(value = "/{id}", produces = "application/json")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
