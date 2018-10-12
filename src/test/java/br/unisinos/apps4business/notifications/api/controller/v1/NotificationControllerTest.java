@@ -1,9 +1,9 @@
-package br.unisinos.apps4business.notifications.controller;
+package br.unisinos.apps4business.notifications.api.controller.v1;
 
+import br.unisinos.apps4business.notifications.api.converter.v1.NotificationConverter;
 import br.unisinos.apps4business.notifications.enumerator.NotificationStatus;
 import br.unisinos.apps4business.notifications.enumerator.NotificationType;
 import br.unisinos.apps4business.notifications.model.Notification;
-import br.unisinos.apps4business.notifications.model.Operator;
 import br.unisinos.apps4business.notifications.model.UserGroup;
 import br.unisinos.apps4business.notifications.service.NotificationService;
 import org.junit.Before;
@@ -17,9 +17,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -33,6 +34,8 @@ public class NotificationControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private NotificationService notificationService;
+    @MockBean
+    private NotificationConverter notificationConverter;
 
     private Notification notification;
     private List<Notification> notificationList;
@@ -45,7 +48,7 @@ public class NotificationControllerTest {
 
     @Before
     public void setup(){
-        notification = new Notification(new Operator(), NOTIFICATION_CONTENT, NotificationStatus.SENT, null, new UserGroup(), NotificationType.NOTIFICATION);
+        notification = random(Notification.class);
         notificationList = new ArrayList<>();
         notificationList.add(notification);
 
@@ -54,16 +57,6 @@ public class NotificationControllerTest {
         userGroupList.add(userGroup);
     }
 
-    @Test
-    public void testFetchAllUserGroups() throws Exception{
-        Mockito.when(notificationService.fetchAllUserGroups())
-                .thenReturn(userGroupList);
-        mockMvc.perform(get("/usergroups")
-                .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
-
-    }
 
     @Test
     @Ignore
@@ -71,7 +64,7 @@ public class NotificationControllerTest {
         //TODO fix test
         Mockito.when(notificationService.createNotification(Mockito.any(Notification.class)))
                 .thenReturn(Boolean.TRUE);
-        mockMvc.perform(post("/notifications")
+        mockMvc.perform(post("/v1/notifications")
                 .contentType(APPLICATION_JSON)
                 .content(notification.toString()))
                 .andExpect(status().isOk());
@@ -81,7 +74,7 @@ public class NotificationControllerTest {
     public void testSendNotification()throws Exception{
         Mockito.when(notificationService.sendNotification(Mockito.anyLong()))
                 .thenReturn(Boolean.TRUE);
-        mockMvc.perform(patch("/notifications/{id}", ID)
+        mockMvc.perform(patch("/v1/notifications/{id}", ID)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -90,7 +83,7 @@ public class NotificationControllerTest {
     public void testFetchAllNotifications()throws Exception{
         Mockito.when(notificationService.fetchAllNotifications())
                 .thenReturn(notificationList);
-        mockMvc.perform(get("/notifications")
+        mockMvc.perform(get("/v1/notifications")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)));
@@ -100,7 +93,7 @@ public class NotificationControllerTest {
     public void testCancelNotification()throws Exception{
         Mockito.when(notificationService.cancelNotification(Mockito.anyLong()))
                 .thenReturn(Boolean.TRUE);
-        mockMvc.perform(delete("/notifications/{id}", ID)
+        mockMvc.perform(delete("/v1/notifications/{id}", ID)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -110,7 +103,7 @@ public class NotificationControllerTest {
         Mockito.when(notificationService.filerNotifications(Mockito.anyString(), Mockito.anyString(), Mockito.anyString(), Mockito.any(NotificationType.class), Mockito.any(NotificationStatus.class)))
                 .thenReturn(notificationList);
 
-        mockMvc.perform(get("/notifications/filter")
+        mockMvc.perform(get("/v1/notifications/filter")
                 .param("content", NOTIFICATION_CONTENT)
                 .param("operatorLogin", USER_LOGIN)
                 .param("userGroup", USER_GROUP_NAME)

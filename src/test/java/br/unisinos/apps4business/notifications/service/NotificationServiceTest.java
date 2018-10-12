@@ -2,17 +2,21 @@ package br.unisinos.apps4business.notifications.service;
 
 import br.unisinos.apps4business.notifications.enumerator.NotificationStatus;
 import br.unisinos.apps4business.notifications.enumerator.NotificationType;
+import br.unisinos.apps4business.notifications.enumerator.Role;
 import br.unisinos.apps4business.notifications.model.Notification;
-import br.unisinos.apps4business.notifications.model.Operator;
+import br.unisinos.apps4business.notifications.model.User;
 import br.unisinos.apps4business.notifications.model.UserGroup;
 import br.unisinos.apps4business.notifications.repository.NotificationRepository;
-import br.unisinos.apps4business.notifications.repository.UserGroupRespository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
@@ -21,44 +25,40 @@ import java.util.List;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
+@SpringBootTest
 public class NotificationServiceTest {
+    @Autowired
     private NotificationService notificationService;
     private static final Long ID =1l;
     private Notification notification;
     private UserGroup userGroup;
-    private Operator operator;
+    private User operator;
     private LocalDate localDate;
     private NotificationType notificationType;
-    private static final String USER_NAME = "test name";
     private static final String USER_LOGIN = "test login";
-    private static final String USER_EMAIL = "test email";
-    private static final String OPERATOR_ROLE = "test role";
     private static final String NOTIFICATION_CONTENT = "test content";
     private static final String USER_GROUP_NAME = "test name";
-    private static final String USER_GROUP_DESCRIPTION = "test name";
     private Iterable<Notification> allNotifications;
     private Iterable<UserGroup> allUserGroups;
     private List<Notification> notificationList;
     @MockBean
     private NotificationRepository notificationRepository;
-    @MockBean
-    private UserGroupRespository userGroupRespository;
-
 
     @Before
     public void setup(){
         localDate = LocalDate.now();
-        operator = new Operator(USER_LOGIN, USER_NAME, USER_EMAIL, OPERATOR_ROLE);
-        userGroup = new UserGroup(USER_GROUP_NAME, USER_GROUP_DESCRIPTION);
+        operator = random(User.class);
+        operator.setRole(Role.OPERATOR);
+
+        userGroup = random(UserGroup.class);
         notificationType = NotificationType.NOTIFICATION;
-        notification = new Notification(operator, NOTIFICATION_CONTENT, NotificationStatus.SENT, localDate, userGroup, notificationType);
+        notification = random(Notification.class);
         allNotifications = new ArrayList<>();
         ((ArrayList<Notification>) allNotifications).add(notification);
         allUserGroups = new ArrayList<>();
         ((ArrayList<UserGroup>) allUserGroups).add(userGroup);
         notificationList = new ArrayList<>();
         notificationList.add(notification);
-        notificationService = new NotificationService(notificationRepository, userGroupRespository);
     }
 
 
@@ -82,7 +82,7 @@ public class NotificationServiceTest {
     }
     @Test
     public void testFindByOperator(){
-        Mockito.when(notificationRepository.findByOperator(Mockito.any(Operator.class)))
+        Mockito.when(notificationRepository.findByUser(Mockito.any(User.class)))
                 .thenReturn(notificationList);
 
         List<Notification> notifications = notificationService.findByOperator(operator);
@@ -127,15 +127,6 @@ public class NotificationServiceTest {
         assertFalse(notifications.isEmpty());
     }
 
-    @Test
-    public void testFetchingAllUserGroups(){
-        Mockito.when(userGroupRespository.findAll())
-                .thenReturn(allUserGroups);
-
-        List<UserGroup> userGroups = notificationService.fetchAllUserGroups();
-        assertNotNull(userGroups);
-        assertFalse(userGroups.isEmpty());
-    }
     @Test
     public void testCreateNotificationWithSendStatus(){
         Mockito.when(notificationRepository.save(Mockito.any(Notification.class)))
