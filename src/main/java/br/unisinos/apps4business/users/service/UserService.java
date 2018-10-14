@@ -22,7 +22,7 @@ public class UserService {
 
     public List<User> fetchAllUsers(){
         List<User> list = new ArrayList<>();
-        userRepository.findAll().forEach(user -> list.add(user));
+        userRepository.findAll().forEach(list::add);
         return list;
     }
 

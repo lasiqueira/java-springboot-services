@@ -30,7 +30,7 @@ public class UserGroupService {
 
     public List<UserGroup> fetchAllUserGroups() {
         List<UserGroup> list = new ArrayList<>();
-        userGroupRespository.findAll().forEach(userGroup -> list.add(userGroup));
+        userGroupRespository.findAll().forEach(list::add);
         return list;
     }
 
