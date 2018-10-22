@@ -5,7 +5,7 @@ Java 1.8 and Spring boot 2 CRUD REST API
 `gradle clean build`
 
 ## Running
-`gradle run`
+`gradle bootRun`
 
 ## Documentation
 (default: http://localhost:8080)
