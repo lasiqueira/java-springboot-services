@@ -6,14 +6,15 @@ import br.unisinos.apps4business.users.api.dto.v1.UserResponseDTO;
 import br.unisinos.apps4business.users.model.User;
 import br.unisinos.apps4business.users.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -27,8 +28,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -45,7 +47,7 @@ public class UserControllerTest {
     private List<User> userList;
     private User user;
 
-    @Before
+    @BeforeAll
     public void setup(){
         user = random(User.class);
         userRequestDTO = random(UserRequestDTO.class);

@@ -3,21 +3,23 @@ package br.unisinos.apps4business.users.api.converter.v1;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupResponseDTO;
 import br.unisinos.apps4business.users.model.UserGroup;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserGroupConverterTest {
     @Autowired
     private UserGroupConverter userGroupConverter;
@@ -26,7 +28,7 @@ public class UserGroupConverterTest {
     private UserGroupRequestDTO userGroupRequestDTO;
     private List<UserGroup> userGroups;
 
-    @Before
+    @BeforeAll
     public void setup(){
         userGroup = random(UserGroup.class);
         userGroupRequestDTO = random(UserGroupRequestDTO.class);

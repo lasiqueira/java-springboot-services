@@ -2,24 +2,25 @@ package br.unisinos.apps4business.users.service;
 
 import br.unisinos.apps4business.users.model.UserGroup;
 import br.unisinos.apps4business.users.repository.UserGroupRespository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static io.github.benas.randombeans.api.EnhancedRandom.random;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class UserGroupServiceTest {
     @Autowired
     private UserGroupService userGroupService;
@@ -31,7 +32,7 @@ public class UserGroupServiceTest {
     private static final Long ID = 1l;
 
 
-    @Before
+    @BeforeAll
     public void setup(){
         userGroup = random(UserGroup.class);
         userGroupRet = new UserGroup();
