@@ -1,11 +1,11 @@
 package br.unisinos.apps4business.users.api.controller.v1;
 
-import br.unisinos.apps4business.users.api.converter.v1.UserGroupConverter;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupResponseDTO;
 import br.unisinos.apps4business.users.model.UserGroup;
 import br.unisinos.apps4business.users.service.UserGroupService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ma.glasnost.orika.MapperFacade;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -39,7 +39,7 @@ public class UserGroupControllerTest {
     @MockBean
     private UserGroupService userGroupService;
     @MockBean
-    private UserGroupConverter userGroupConverter;
+    private MapperFacade mapperFacade;
     private UserGroupRequestDTO userGroupRequestDTO;
     private UserGroupResponseDTO userGroupResponseDTO;
     private List<UserGroupResponseDTO> userGroupResponseDTOList;
@@ -63,7 +63,7 @@ public class UserGroupControllerTest {
     public void fetchAllUserGroupsTest() throws Exception{
         when(userGroupService.fetchAllUserGroups())
                 .thenReturn(userGroupList);
-        when(userGroupConverter.convertEntityListToResponseList(userGroupList)).thenReturn(userGroupResponseDTOList);
+        when(mapperFacade.mapAsList(userGroupList, UserGroupResponseDTO.class)).thenReturn(userGroupResponseDTOList);
         mockMvc.perform(get("/v1/usergroups")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -73,7 +73,7 @@ public class UserGroupControllerTest {
     public void createUserGroupTest() throws Exception{
         when(userGroupService.createUserGroup(Mockito.any(UserGroup.class)))
                 .thenReturn(userGroupRet);
-        when(userGroupConverter.convertEntityToResponse(Mockito.any(UserGroup.class))).thenReturn(userGroupResponseDTO);
+        when(mapperFacade.map(userGroupRet, UserGroupResponseDTO.class)).thenReturn(userGroupResponseDTO);
         mockMvc.perform(post("/v1/usergroups")
                 .content(objectMapper.writeValueAsString(userGroupRequestDTO))
                 .contentType(APPLICATION_JSON))
@@ -84,7 +84,7 @@ public class UserGroupControllerTest {
     public void updateUserGroup() throws Exception{
         when(userGroupService.updateUserGroup(Mockito.anyLong(),Mockito.any(UserGroup.class)))
                 .thenReturn(userGroupRet);
-        when(userGroupConverter.convertEntityToResponse(Mockito.any(UserGroup.class))).thenReturn(userGroupResponseDTO);
+        when(mapperFacade.map(userGroupRet, UserGroupResponseDTO.class)).thenReturn(userGroupResponseDTO);
         mockMvc.perform(patch("/v1/usergroups/{id}", 1)
                 .content(objectMapper.writeValueAsString(userGroupRequestDTO))
                 .contentType(APPLICATION_JSON))

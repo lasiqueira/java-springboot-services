@@ -1,6 +1,5 @@
 package br.unisinos.apps4business.users.api.controller.v1;
 
-import br.unisinos.apps4business.users.api.converter.v1.UserGroupConverter;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupResponseDTO;
 import br.unisinos.apps4business.users.model.UserGroup;

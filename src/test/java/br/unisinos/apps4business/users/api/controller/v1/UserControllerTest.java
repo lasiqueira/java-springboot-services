@@ -1,6 +1,5 @@
 package br.unisinos.apps4business.users.api.controller.v1;
 
-import br.unisinos.apps4business.users.api.converter.v1.UserConverter;
 import br.unisinos.apps4business.users.api.dto.v1.UserRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserResponseDTO;
 import br.unisinos.apps4business.users.model.User;
@@ -39,8 +38,6 @@ public class UserControllerTest {
     private ObjectMapper objectMapper;
     @MockBean
     private UserService userService;
-    @MockBean
-    private UserConverter userConverter;
     @MockBean
     private MapperFacade mapperFacade;
     private UserRequestDTO userRequestDTO;
