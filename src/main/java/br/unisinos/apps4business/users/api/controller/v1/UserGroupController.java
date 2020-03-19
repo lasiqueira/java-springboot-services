@@ -6,6 +6,8 @@ import br.unisinos.apps4business.users.model.UserGroup;
 import br.unisinos.apps4business.users.service.UserGroupService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,17 +24,17 @@ public class UserGroupController {
     }
 
     @GetMapping(value = "", produces = "application/json")
-    public List<UserGroupResponseDTO> fetchAllUserGroups() {
-        return mapperFacade.mapAsList(userGroupService.fetchAllUserGroups(), UserGroupResponseDTO.class);
+    public ResponseEntity<List<UserGroupResponseDTO>> fetchAllUserGroups() {
+        return new ResponseEntity<>(mapperFacade.mapAsList(userGroupService.fetchAllUserGroups(), UserGroupResponseDTO.class), HttpStatus.OK);
     }
     @PostMapping(value = "", produces = "application/json")
-    public UserGroupResponseDTO createUserGroup(@Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
-        return mapperFacade.map(userGroupService.createUserGroup(mapperFacade.map(userGroupRequest, UserGroup.class)), UserGroupResponseDTO.class);
+    public ResponseEntity<UserGroupResponseDTO> createUserGroup(@Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
+        return new ResponseEntity<>(mapperFacade.map(userGroupService.createUserGroup(mapperFacade.map(userGroupRequest, UserGroup.class)), UserGroupResponseDTO.class), HttpStatus.OK);
     }
 
     @PatchMapping(value = "/{id}", produces = "application/json")
-    public UserGroupResponseDTO updateUserGroup(@PathVariable Long id, @Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
-        return mapperFacade.map(userGroupService.updateUserGroup(id, mapperFacade.map(userGroupRequest, UserGroup.class)), UserGroupResponseDTO.class);
+    public ResponseEntity<UserGroupResponseDTO> updateUserGroup(@PathVariable Long id, @Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
+        return new ResponseEntity<>(mapperFacade.map(userGroupService.updateUserGroup(id, mapperFacade.map(userGroupRequest, UserGroup.class)), UserGroupResponseDTO.class), HttpStatus.OK);
     }
 
 }

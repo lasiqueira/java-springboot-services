@@ -6,6 +6,8 @@ import br.unisinos.apps4business.users.model.User;
 import br.unisinos.apps4business.users.service.UserService;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,27 +27,28 @@ public class UserController {
     }
 
     @PostMapping(value = "", produces = "application/json")
-    public UserResponseDTO createUser(@Valid @RequestBody UserRequestDTO user) {
-        return mapperFacade.map(userService.createUser(mapperFacade.map(user, User.class)), UserResponseDTO.class);
+    public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO user) {
+        return new ResponseEntity<>(mapperFacade.map(userService.createUser(mapperFacade.map(user, User.class)), UserResponseDTO.class), HttpStatus.CREATED);
     }
     @PatchMapping(value = "/{id}", produces = "application/json")
-    public UserResponseDTO updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO user) {
-        return mapperFacade.map(userService.updateUser(id, mapperFacade.map(user, User.class)), UserResponseDTO.class);
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserRequestDTO user) {
+        return new ResponseEntity<>(mapperFacade.map(userService.updateUser(id, mapperFacade.map(user, User.class)), UserResponseDTO.class), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public UserResponseDTO getUser(@PathVariable Long id) {
-        return mapperFacade.map(userService.findById(id), UserResponseDTO.class);
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id) {
+        return new ResponseEntity<>(mapperFacade.map(userService.findById(id), UserResponseDTO.class), HttpStatus.OK);
     }
 
     @GetMapping(value = "", produces = "application/json")
-    public List<UserResponseDTO> fetchAllUsers() {
-        return mapperFacade.mapAsList(userService.fetchAllUsers(), UserResponseDTO.class);
+    public ResponseEntity<List<UserResponseDTO>> fetchAllUsers() {
+        return new ResponseEntity<>(mapperFacade.mapAsList(userService.fetchAllUsers(), UserResponseDTO.class), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/{id}", produces = "application/json")
-    public void deleteUser(@PathVariable Long id) {
+    public ResponseEntity deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }
