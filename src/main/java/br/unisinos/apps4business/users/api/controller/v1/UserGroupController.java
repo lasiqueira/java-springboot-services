@@ -29,7 +29,7 @@ public class UserGroupController {
     }
     @PostMapping(value = "", produces = "application/json")
     public ResponseEntity<UserGroupResponseDTO> createUserGroup(@Valid @RequestBody UserGroupRequestDTO userGroupRequest) {
-        return new ResponseEntity<>(mapperFacade.map(userGroupService.createUserGroup(mapperFacade.map(userGroupRequest, UserGroup.class)), UserGroupResponseDTO.class), HttpStatus.OK);
+        return new ResponseEntity<>(mapperFacade.map(userGroupService.createUserGroup(mapperFacade.map(userGroupRequest, UserGroup.class)), UserGroupResponseDTO.class), HttpStatus.CREATED);
     }
 
     @PatchMapping(value = "/{id}", produces = "application/json")

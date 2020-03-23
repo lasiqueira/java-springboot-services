@@ -64,7 +64,7 @@ public class UserControllerTest {
         mockMvc.perform(post("/v1/users")
                 .content(objectMapper.writeValueAsString(userRequestDTO))
                 .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
     @Test
     public void updateUserTest() throws Exception{
@@ -98,7 +98,7 @@ public class UserControllerTest {
     public void deleteUserTest() throws Exception{
         mockMvc.perform(delete("/v1/users/{id}", 1)
                 .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 
 

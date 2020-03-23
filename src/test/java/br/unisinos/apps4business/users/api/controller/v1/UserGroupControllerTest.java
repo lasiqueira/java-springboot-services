@@ -77,7 +77,7 @@ public class UserGroupControllerTest {
         mockMvc.perform(post("/v1/usergroups")
                 .content(objectMapper.writeValueAsString(userGroupRequestDTO))
                 .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test
