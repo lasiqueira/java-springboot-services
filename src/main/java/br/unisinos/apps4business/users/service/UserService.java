@@ -7,7 +7,7 @@ import br.unisinos.apps4business.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.NotFoundException;
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class UserService {
             user.setId(id);
             return userRepository.save(user);
         } else{
-            throw new NotFoundException();
+            throw new EntityNotFoundException();
         }
     }
 
@@ -52,7 +52,7 @@ public class UserService {
         if(userRepository.existsById(id)) {
             userRepository.deleteById(id);
         } else{
-            throw new NotFoundException();
+            throw new EntityNotFoundException();
         }
     }
 }

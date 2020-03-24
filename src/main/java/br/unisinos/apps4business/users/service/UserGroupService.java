@@ -5,7 +5,7 @@ import br.unisinos.apps4business.users.repository.UserGroupRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.ws.rs.NotFoundException;
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -24,7 +24,7 @@ public class UserGroupService {
         if(userGroupRespository.existsById(id)){
             return userGroupRespository.save(userGroup);
         }else{
-            throw new NotFoundException();
+            throw new EntityNotFoundException();
         }
     }
 
