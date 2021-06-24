@@ -1,11 +1,14 @@
 package br.unisinos.apps4business.users.api.controller.v1;
 
+import br.unisinos.apps4business.users.api.converter.v1.Converter;
+import br.unisinos.apps4business.users.api.dto.v1.UserGroupResponseDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserResponseDTO;
+import br.unisinos.apps4business.users.enumerators.Role;
 import br.unisinos.apps4business.users.model.User;
+import br.unisinos.apps4business.users.model.UserGroup;
 import br.unisinos.apps4business.users.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ma.glasnost.orika.MapperFacade;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -16,11 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -39,7 +38,7 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
     @MockBean
-    private MapperFacade mapperFacade;
+    private Converter converter;
     private UserRequestDTO userRequestDTO;
     private UserResponseDTO userResponseDTO;
     private List<UserResponseDTO> userResponseDTOList;
@@ -48,19 +47,17 @@ public class UserControllerTest {
 
     @BeforeAll
     public void setup(){
-        user = random(User.class);
-        userRequestDTO = random(UserRequestDTO.class);
-        userResponseDTO = random(UserResponseDTO.class);
-        userList = new ArrayList<>();
-        userList.add(user);
-        userResponseDTOList = new ArrayList<>();
-        userResponseDTOList.add(userResponseDTO);
+        user = new User(1L, Role.OPERATOR,"test", "test", "test@test.com", List.of(new UserGroup(1L, "test", "test")));
+        userRequestDTO = new UserRequestDTO(Role.OPERATOR,"test", "test", "test@test.com", List.of(new UserGroupResponseDTO(1L, "test", "test")));
+        userResponseDTO = new UserResponseDTO(1L, Role.OPERATOR,"test", "test", "test@test.com", List.of(new UserGroupResponseDTO(1L, "test", "test")));
+        userList = List.of(user);
+        userResponseDTOList = List.of(userResponseDTO);
     }
 
     @Test
     public void createUserTest() throws Exception{
         when(userService.createUser(Mockito.any(User.class))).thenReturn(user);
-        when(mapperFacade.map(user, UserResponseDTO.class)).thenReturn(userResponseDTO);
+        when(converter.convertUserToUserResponseDTO(user)).thenReturn(userResponseDTO);
         mockMvc.perform(post("/v1/users")
                 .content(objectMapper.writeValueAsString(userRequestDTO))
                 .contentType(APPLICATION_JSON))
@@ -69,7 +66,7 @@ public class UserControllerTest {
     @Test
     public void updateUserTest() throws Exception{
         when(userService.updateUser(Mockito.anyLong(), Mockito.any(User.class))).thenReturn(user);
-        when(mapperFacade.map(user, UserResponseDTO.class)).thenReturn(userResponseDTO);
+        when(converter.convertUserToUserResponseDTO(user)).thenReturn(userResponseDTO);
         mockMvc.perform(patch("/v1/users/{id}", 1)
                 .content(objectMapper.writeValueAsString(userRequestDTO))
                 .contentType(APPLICATION_JSON))
@@ -78,7 +75,7 @@ public class UserControllerTest {
     @Test
     public void getUserTest() throws Exception{
         when(userService.findById(Mockito.anyLong())).thenReturn(user);
-        when(mapperFacade.map(user, UserResponseDTO.class)).thenReturn(userResponseDTO);
+        when(converter.convertUserToUserResponseDTO(user)).thenReturn(userResponseDTO);
         mockMvc.perform(get("/v1/users/{id}", 1)
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -87,7 +84,7 @@ public class UserControllerTest {
     @Test
     public void fetchAllUsersTest() throws Exception{
         when(userService.fetchAllUsers()).thenReturn(userList);
-        when(mapperFacade.mapAsList(userList, UserResponseDTO.class)).thenReturn(userResponseDTOList);
+        when(converter.convertUserListToUserResponseDTOList(userList)).thenReturn(userResponseDTOList);
         mockMvc.perform(get("/v1/users")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isOk())

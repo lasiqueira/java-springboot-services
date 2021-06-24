@@ -18,6 +18,17 @@ public class User {
     @ManyToMany
     private List<UserGroup> userGroups;
 
+    public User() {
+    }
+
+    public User(Long id, Role role, String login, String name, String email, List<UserGroup> userGroups) {
+        this.id = id;
+        this.role = role;
+        this.login = login;
+        this.name = name;
+        this.email = email;
+        this.userGroups = userGroups;
+    }
 
     public Long getId() {
         return id;

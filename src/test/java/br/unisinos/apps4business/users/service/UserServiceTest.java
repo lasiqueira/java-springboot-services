@@ -13,12 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -37,17 +33,12 @@ public class UserServiceTest {
     private static final Long ID = 1l;
     @BeforeAll
     public void setup(){
-        user = random(User.class);
-        userRet =random(User.class);
-        userGroup = random(UserGroup.class);
-        userGroup.setId(ID);
-        user.setId(null);
-        userRet.getUserGroups().clear();
-        userRet.getUserGroups().add(userGroup);
-        userRet.setRole(Role.OPERATOR);
-        userRet.setId(ID);
-        userList = new ArrayList<>();
-        userList.add(userRet);
+        userGroup =  new UserGroup(ID, "test", "test");
+        user = new User(null, Role.OPERATOR,"test", "test", "test@test.com", List.of(userGroup));
+        userRet = new User(ID, Role.OPERATOR,"test", "test", "test@test.com", List.of(userGroup));
+
+
+        userList = List.of(userRet);
     }
 
     @Test

@@ -10,11 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
-import java.util.ArrayList;
 import java.util.List;
-
-import static io.github.benas.randombeans.api.EnhancedRandom.random;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -34,15 +30,9 @@ public class UserGroupServiceTest {
 
     @BeforeAll
     public void setup(){
-        userGroup = random(UserGroup.class);
-        userGroupRet = new UserGroup();
-        userGroupRet.setDescription(userGroup.getDescription());
-        userGroupRet.setName(userGroup.getName());
-        userGroupRet.setId(userGroup.getId());
-        userGroup.setId(null);
-        userGroupRet.setId(ID);
-        userGroupList = new ArrayList<>();
-        userGroupList.add(userGroupRet);
+        userGroup = new UserGroup(null, "test", "test");
+        userGroupRet = new UserGroup(ID, "test", "test");
+        userGroupList = List.of(userGroupRet);
     }
 
     @Test
