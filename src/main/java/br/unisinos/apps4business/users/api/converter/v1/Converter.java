@@ -20,9 +20,9 @@ public class Converter {
                 user.getEmail(),
                 convertUserGroupListToUserGroupResponseDTOList(user.getUserGroups()));
     }
-    public List<UserGroupResponseDTO> convertUserGroupListToUserGroupResponseDTOList(List<UserGroup> userGroups){
+    public List<UserGroupDTO> convertUserGroupListToUserGroupResponseDTOList(List<UserGroup> userGroups){
         return userGroups.stream()
-                .map(userGroup -> new UserGroupResponseDTO(userGroup.getId(), userGroup.getName(), userGroup.getDescription()))
+                .map(userGroup -> new UserGroupDTO(userGroup.getId(), userGroup.getName(), userGroup.getDescription()))
                 .collect(Collectors.toList());
 
     }
@@ -37,7 +37,7 @@ public class Converter {
                convertUserGroupResponseDTOListToUserGroupList(userRequestDTO.userGroups()));
     }
 
-    public List<UserGroup> convertUserGroupResponseDTOListToUserGroupList(List<UserGroupResponseDTO> userGroups) {
+    public List<UserGroup> convertUserGroupResponseDTOListToUserGroupList(List<UserGroupDTO> userGroups) {
         return userGroups.stream()
                 .map(userGroupDTO -> new UserGroup(userGroupDTO.id(), userGroupDTO.name(), userGroupDTO.description()))
                 .collect(Collectors.toList());
@@ -53,8 +53,8 @@ public class Converter {
         return new UserGroup(null, userGroupRequestDTO.name(), userGroupRequestDTO.description());
     }
 
-    public UserGroupResponseDTO convertUserGroupToUserGroupResponseDTO(UserGroup userGroup){
-        return new UserGroupResponseDTO(userGroup.getId(), userGroup.getName(), userGroup.getDescription());
+    public UserGroupDTO convertUserGroupToUserGroupResponseDTO(UserGroup userGroup){
+        return new UserGroupDTO(userGroup.getId(), userGroup.getName(), userGroup.getDescription());
     }
 
 

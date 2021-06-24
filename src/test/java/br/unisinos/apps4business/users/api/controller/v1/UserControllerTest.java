@@ -1,7 +1,7 @@
 package br.unisinos.apps4business.users.api.controller.v1;
 
 import br.unisinos.apps4business.users.api.converter.v1.Converter;
-import br.unisinos.apps4business.users.api.dto.v1.UserGroupResponseDTO;
+import br.unisinos.apps4business.users.api.dto.v1.UserGroupDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserResponseDTO;
 import br.unisinos.apps4business.users.enumerators.Role;
@@ -48,8 +48,8 @@ public class UserControllerTest {
     @BeforeAll
     public void setup(){
         user = new User(1L, Role.OPERATOR,"test", "test", "test@test.com", List.of(new UserGroup(1L, "test", "test")));
-        userRequestDTO = new UserRequestDTO(Role.OPERATOR,"test", "test", "test@test.com", List.of(new UserGroupResponseDTO(1L, "test", "test")));
-        userResponseDTO = new UserResponseDTO(1L, Role.OPERATOR,"test", "test", "test@test.com", List.of(new UserGroupResponseDTO(1L, "test", "test")));
+        userRequestDTO = new UserRequestDTO(Role.OPERATOR,"test", "test", "test@test.com", List.of(new UserGroupDTO(1L, "test", "test")));
+        userResponseDTO = new UserResponseDTO(1L, Role.OPERATOR,"test", "test", "test@test.com", List.of(new UserGroupDTO(1L, "test", "test")));
         userList = List.of(user);
         userResponseDTOList = List.of(userResponseDTO);
     }

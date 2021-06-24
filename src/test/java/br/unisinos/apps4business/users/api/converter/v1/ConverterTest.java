@@ -1,7 +1,7 @@
 package br.unisinos.apps4business.users.api.converter.v1;
 
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupRequestDTO;
-import br.unisinos.apps4business.users.api.dto.v1.UserGroupResponseDTO;
+import br.unisinos.apps4business.users.api.dto.v1.UserGroupDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserResponseDTO;
 import br.unisinos.apps4business.users.enumerators.Role;
@@ -29,17 +29,24 @@ public class ConverterTest {
     private static String USER_NAME = "test";
     private static String USER_EMAIL = "test@test.com";
 
+    private User user;
+    private UserGroup userGroup;
+    private UserGroupDTO userGroupDTO;
+    private UserResponseDTO userResponseDTO;
+
     @BeforeAll
     public void setup() {
         converter = new Converter();
-
+        userGroup = new UserGroup(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION);
+        user = new User(USER_ID, USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(userGroup));
+        userGroupDTO = new UserGroupDTO(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION);
+        userResponseDTO = new UserResponseDTO(USER_ID, USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(userGroupDTO));
     }
 
     @Test
     public void convertUserGroupToUserGroupResponseDTOTest() {
-        UserGroup userGroup = new UserGroup(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION);
-        UserGroupResponseDTO expected = new UserGroupResponseDTO(userGroup.getId(), userGroup.getName(), userGroup.getDescription());
-        UserGroupResponseDTO actual = converter.convertUserGroupToUserGroupResponseDTO(userGroup);
+        UserGroupDTO expected = new UserGroupDTO(userGroup.getId(), userGroup.getName(), userGroup.getDescription());
+        UserGroupDTO actual = converter.convertUserGroupToUserGroupResponseDTO(userGroup);
         assertEquals(expected, actual);
     }
 
@@ -52,41 +59,40 @@ public class ConverterTest {
     }
 
     @Test
-    public void convertUserGroupRequestToUserGroupListTest() {
-        List<UserGroupResponseDTO> userGroupResponseDTOList = List.of(new UserGroupResponseDTO(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION));
-        List<UserGroup> expected = List.of(new UserGroup(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION));
-        List<UserGroup> actual = converter.convertUserGroupResponseDTOListToUserGroupList(userGroupResponseDTOList);
+    public void convertUserGroupResponseToUserGroupListTest() {
+        List<UserGroupDTO> userGroupDTOList = List.of(userGroupDTO);
+        List<UserGroup> expected = List.of(userGroup);
+        List<UserGroup> actual = converter.convertUserGroupResponseDTOListToUserGroupList(userGroupDTOList);
         assertEquals(expected, actual);
     }
 
     @Test
     public void convertUserGroupListToUserGroupResponseDTOListTest() {
-        List<UserGroup> userGroupResponseDTOList = List.of(new UserGroup(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION));
-        List<UserGroupResponseDTO> expected = List.of(new UserGroupResponseDTO(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION));
-        List<UserGroupResponseDTO> actual = converter.convertUserGroupListToUserGroupResponseDTOList(userGroupResponseDTOList);
+        List<UserGroup> userGroupResponseDTOList = List.of(userGroup);
+        List<UserGroupDTO> expected = List.of(userGroupDTO);
+        List<UserGroupDTO> actual = converter.convertUserGroupListToUserGroupResponseDTOList(userGroupResponseDTOList);
         assertEquals(expected, actual);
     }
 
     @Test
     public void convertUserRequestDTOToUserTest() {
-        UserRequestDTO userGroupResponseDTOList = new UserRequestDTO(USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(new UserGroupResponseDTO(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION)));
-        User expected = new User(null, USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(new UserGroup(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION)));
-        User actual = converter.convertUserRequestDTOToUser(userGroupResponseDTOList);
+        UserRequestDTO userGroupResponseDTO = new UserRequestDTO(USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(userGroupDTO));
+        User expected = new User(null, USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(userGroup));
+        User actual = converter.convertUserRequestDTOToUser(userGroupResponseDTO);
         assertEquals(expected, actual);
     }
 
     @Test
     public void convertUserToUserResponseDTOTest() {
-        User user = new User(USER_ID, USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(new UserGroup(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION)));
-        UserResponseDTO expected = new UserResponseDTO(USER_ID, USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(new UserGroupResponseDTO(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION)));
+        UserResponseDTO expected = userResponseDTO;
         UserResponseDTO actual = converter.convertUserToUserResponseDTO(user);
         assertEquals(expected, actual);
     }
 
     @Test
     public void convertUserListToUserResponseDTOListTest() {
-        List<User> users = List.of(new User(USER_ID, USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(new UserGroup(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION))));
-        List<UserResponseDTO> expected = List.of(new UserResponseDTO(USER_ID, USER_ROLE, USER_LOGIN, USER_NAME, USER_EMAIL, List.of(new UserGroupResponseDTO(USER_GROUP_ID, USER_GROUP_NAME, USER_GROUP_DESCRIPTION))));
+        List<User> users = List.of(user);
+        List<UserResponseDTO> expected = List.of(userResponseDTO);
         List<UserResponseDTO> actual = converter.convertUserListToUserResponseDTOList(users);
         assertEquals(expected, actual);
     }
