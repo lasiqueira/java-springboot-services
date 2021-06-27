@@ -10,9 +10,9 @@ public class BiometricsConverter {
     public Biometrics convertRequestDTOToEntity(BiometricsRequestDTO biometricsRequestDTO){
         return Biometrics
                 .builder()
-                .data(biometricsRequestDTO.getData())
-                .timestamp(biometricsRequestDTO.getTimestamp())
-                .user(biometricsRequestDTO.getUser())
+                .data(biometricsRequestDTO.data())
+                .timestamp(biometricsRequestDTO.timestamp())
+                .user(biometricsRequestDTO.user())
                 .build();
     }
     public Biometrics convertMessageDTOToEntity(BiometricsMessageDTO biometricsMessageDTO){
@@ -27,9 +27,9 @@ public class BiometricsConverter {
     public BiometricsMessageDTO convertRequestDTOToMessageDTO(BiometricsRequestDTO biometricsRequestDTO){
         return BiometricsMessageDTO
                 .builder()
-                .data(biometricsRequestDTO.getData())
-                .timestamp(biometricsRequestDTO.getTimestamp())
-                .user(biometricsRequestDTO.getUser())
+                .data(biometricsRequestDTO.data())
+                .timestamp(biometricsRequestDTO.timestamp())
+                .user(biometricsRequestDTO.user())
                 .build();
     }
 }
