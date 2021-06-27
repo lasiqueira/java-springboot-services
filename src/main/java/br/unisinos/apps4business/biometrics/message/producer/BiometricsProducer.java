@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BiometricsProducer {
-    private RabbitTemplate rabbitTemplate;
-    private Queue queue;
-    private Counter counter;
-    private Logger logger;
+    private final RabbitTemplate rabbitTemplate;
+    private final Queue queue;
+    private final Counter counter;
+    private final Logger logger;
 
     public BiometricsProducer(RabbitTemplate rabbitTemplate, Queue queue, MeterRegistry meterRegistry) {
         this.rabbitTemplate = rabbitTemplate;

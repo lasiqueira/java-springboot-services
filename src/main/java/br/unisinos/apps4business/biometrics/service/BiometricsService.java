@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BiometricsService {
-    private BiometricsRepository biometricsRepository;
+    private final BiometricsRepository biometricsRepository;
 
     public BiometricsService(BiometricsRepository biometricsRepository) {
         this.biometricsRepository = biometricsRepository;

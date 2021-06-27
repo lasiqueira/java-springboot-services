@@ -12,10 +12,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BiometricsListener {
-    private BiometricsService biometricsService;
-    private BiometricsConverter biometricsConverter;
-    private Counter counter;
-    private Logger logger;
+    private final BiometricsService biometricsService;
+    private final BiometricsConverter biometricsConverter;
+    private final Counter counter;
+    private final Logger logger;
 
     public BiometricsListener(BiometricsService biometricsService, BiometricsConverter biometricsConverter, MeterRegistry meterRegistry) {
         this.biometricsService = biometricsService;

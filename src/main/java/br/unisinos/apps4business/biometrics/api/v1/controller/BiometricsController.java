@@ -17,9 +17,9 @@ import javax.validation.Valid;
 @RequestMapping("/v1/biometrics")
 public class BiometricsController {
 
-    private BiometricsProducer biometricsProducer;
-    private BiometricsConverter biometricsConverter;
-    private Logger logger;
+    private final BiometricsProducer biometricsProducer;
+    private final BiometricsConverter biometricsConverter;
+    private final Logger logger;
 
     public BiometricsController(BiometricsProducer biometricsProducer, BiometricsConverter biometricsConverter) {
         this.biometricsProducer = biometricsProducer;
