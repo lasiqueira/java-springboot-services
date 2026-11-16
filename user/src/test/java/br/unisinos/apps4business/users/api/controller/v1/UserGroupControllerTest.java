@@ -5,15 +5,15 @@ import br.unisinos.apps4business.users.api.dto.v1.UserGroupRequestDTO;
 import br.unisinos.apps4business.users.api.dto.v1.UserGroupDTO;
 import br.unisinos.apps4business.users.model.UserGroup;
 import br.unisinos.apps4business.users.service.UserGroupService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
@@ -32,9 +32,9 @@ public class UserGroupControllerTest {
     private MockMvc mockMvc;
     @Autowired
     ObjectMapper objectMapper;
-    @MockBean
+    @MockitoBean
     private UserGroupService userGroupService;
-    @MockBean
+    @MockitoBean
     private Converter converter;
     private UserGroupRequestDTO userGroupRequestDTO;
     private UserGroupDTO userGroupDTO;

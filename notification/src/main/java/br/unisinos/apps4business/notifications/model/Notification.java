@@ -4,7 +4,7 @@ import br.unisinos.apps4business.notifications.enumerator.NotificationStatus;
 import br.unisinos.apps4business.notifications.enumerator.NotificationType;
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity

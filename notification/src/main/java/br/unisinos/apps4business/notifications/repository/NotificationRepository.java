@@ -5,7 +5,7 @@ import br.unisinos.apps4business.notifications.enumerator.NotificationType;
 import br.unisinos.apps4business.notifications.model.Notification;
 import br.unisinos.apps4business.notifications.model.User;
 import br.unisinos.apps4business.notifications.model.UserGroup;
-import jdk.internal.jline.internal.Nullable;
+import org.jspecify.annotations.Nullable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

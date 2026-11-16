@@ -7,24 +7,21 @@ import br.unisinos.apps4business.notifications.model.Notification;
 import br.unisinos.apps4business.notifications.model.User;
 import br.unisinos.apps4business.notifications.model.UserGroup;
 import br.unisinos.apps4business.notifications.repository.NotificationRepository;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import br.unisinos.apps4business.notifications.TestData;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import static io.github.benas.randombeans.api.EnhancedRandom.random;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class NotificationServiceTest {
     @Autowired
@@ -41,18 +38,18 @@ public class NotificationServiceTest {
     private Iterable<Notification> allNotifications;
     private Iterable<UserGroup> allUserGroups;
     private List<Notification> notificationList;
-    @MockBean
+    @MockitoBean
     private NotificationRepository notificationRepository;
 
-    @Before
+    @BeforeEach
     public void setup(){
         localDate = LocalDate.now();
-        operator = random(User.class);
+        operator = TestData.operator();
         operator.setRole(Role.OPERATOR);
 
-        userGroup = random(UserGroup.class);
+        userGroup = TestData.userGroup();
         notificationType = NotificationType.NOTIFICATION;
-        notification = random(Notification.class);
+        notification = TestData.notification();
         allNotifications = new ArrayList<>();
         ((ArrayList<Notification>) allNotifications).add(notification);
         allUserGroups = new ArrayList<>();

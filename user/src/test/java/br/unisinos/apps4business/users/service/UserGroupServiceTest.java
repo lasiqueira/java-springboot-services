@@ -8,7 +8,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class UserGroupServiceTest {
     @Autowired
     private UserGroupService userGroupService;
-    @MockBean
+    @MockitoBean
     private UserGroupRespository userGroupRespository;
     private UserGroup userGroup;
     private UserGroup userGroupRet;

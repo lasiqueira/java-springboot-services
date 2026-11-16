@@ -2,11 +2,12 @@ package br.unisinos.apps4business.users.model;
 
 import br.unisinos.apps4business.users.enumerators.Role;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
+@Table(name = "users") // "user" is a reserved word in H2 2.x
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

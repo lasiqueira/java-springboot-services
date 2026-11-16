@@ -1,11 +1,14 @@
 # notification
-Java 1.8 and Spring boot 2 CRUD REST API
+Java 25 and Spring Boot 4 CRUD REST API
+
+## Setup
+You need [JDK 25](https://adoptium.net/) (e.g. `brew install openjdk@25`). Gradle is provided by the wrapper.
 
 ## Building
-`gradle clean build`
+`./gradlew clean build`
 
 ## Running
-`gradle bootRun`
+`./gradlew bootRun`
 
 ## Documentation
 (default: http://localhost:8080)
