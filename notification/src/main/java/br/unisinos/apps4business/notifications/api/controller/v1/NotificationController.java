@@ -8,7 +8,7 @@ import br.unisinos.apps4business.notifications.model.Notification;
 import br.unisinos.apps4business.notifications.service.NotificationService;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController

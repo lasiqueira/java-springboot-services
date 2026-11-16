@@ -18,18 +18,16 @@ public class BiometricsConverter {
     public Biometrics convertMessageDTOToEntity(BiometricsMessageDTO biometricsMessageDTO){
         return Biometrics
                 .builder()
-                .data(biometricsMessageDTO.getData())
-                .timestamp(biometricsMessageDTO.getTimestamp())
-                .user(biometricsMessageDTO.getUser())
+                .data(biometricsMessageDTO.data())
+                .timestamp(biometricsMessageDTO.timestamp())
+                .user(biometricsMessageDTO.user())
                 .build();
     }
 
     public BiometricsMessageDTO convertRequestDTOToMessageDTO(BiometricsRequestDTO biometricsRequestDTO){
-        return BiometricsMessageDTO
-                .builder()
-                .data(biometricsRequestDTO.data())
-                .timestamp(biometricsRequestDTO.timestamp())
-                .user(biometricsRequestDTO.user())
-                .build();
+        return new BiometricsMessageDTO(
+                biometricsRequestDTO.user(),
+                biometricsRequestDTO.data(),
+                biometricsRequestDTO.timestamp());
     }
 }

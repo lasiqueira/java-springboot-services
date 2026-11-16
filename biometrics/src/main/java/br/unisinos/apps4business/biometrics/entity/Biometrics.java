@@ -1,9 +1,10 @@
 package br.unisinos.apps4business.biometrics.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,9 +12,14 @@ public class Biometrics {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    @Column(name = "user_name") // "user" is a reserved word in H2 2.x
     private String user;
     private String data;
     private LocalDateTime timestamp;
+
+    protected Biometrics() {
+        // required by JPA
+    }
 
     Biometrics(Long id, String user, String data, LocalDateTime timestamp) {
         this.id = id;
@@ -28,7 +34,8 @@ public class Biometrics {
 
     public static class BiometricsBuilder {
         private Long id;
-        private String user;
+        @Column(name = "user_name") // "user" is a reserved word in H2 2.x
+    private String user;
         private String data;
         private LocalDateTime timestamp;
 
